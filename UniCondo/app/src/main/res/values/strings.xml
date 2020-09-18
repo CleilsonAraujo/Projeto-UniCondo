@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UniCondo</string>
+    <string-array name="lista_tipo_login">
+        <item>Condômino</item>
+        <item>Síndico</item>
+        <item>Administrador</item>
+    </string-array>
+</resources>
