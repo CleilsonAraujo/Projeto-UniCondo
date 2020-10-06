@@ -5,4 +5,15 @@
         <item>Síndico</item>
         <item>Administrador</item>
     </string-array>
+    <string-array name="lista_areas_comuns">
+        <item>Churrasqueira</item>
+        <item>Academia</item>
+        <item>Sala de Jogos</item>
+        <item>Lavanderia</item>
+        <item>Quadra de Vôlei</item>
+        <item>Quadra de Tênis</item>
+        <item>Quadra de Basquete</item>
+        <item>Pista de Skate</item>
+        <item>Playground</item>
+    </string-array>
 </resources>

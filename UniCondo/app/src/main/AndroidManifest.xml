@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AreasComuns"></activity>
+        <activity android:name=".AgendaAreasComuns"></activity>
         <activity android:name=".Configuracoes" />
         <activity android:name=".CadastroNoticias" />
-        <activity android:name=".CadastroAcomodacao" />
+        <activity android:name=".CadastroAreaComum" />
         <activity android:name=".Home" />
         <activity android:name=".Cadastro" />
         <activity android:name=".testes" />

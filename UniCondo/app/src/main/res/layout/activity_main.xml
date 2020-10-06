@@ -105,7 +105,7 @@
                 android:layout_marginTop="20dp"
                 android:clickable="true"
                 android:focusable="auto"
-                android:text="Criar uma nova conta" />
+                android:text="Cadastre-se" />
 
         </LinearLayout>
     </FrameLayout>

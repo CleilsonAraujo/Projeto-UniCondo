@@ -6,13 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import java.util.ArrayList;
 
@@ -98,7 +95,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void abrirCadastroAcomodacao(){
-        Intent intent = new Intent(this, CadastroAcomodacao.class);
+        Intent intent = new Intent(this, CadastroAreaComum.class);
         startActivity(intent);
     }
 
@@ -108,7 +105,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void abrirAreasComuns(){
-        Intent intent = new Intent(this, AreasComuns.class);
+        Intent intent = new Intent(this, AgendaAreasComuns.class);
         startActivity(intent);
     }
 

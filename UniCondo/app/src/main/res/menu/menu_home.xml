@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/help"
-        android:title="Cadastro de Acomodação (Síndicos e Administradores)" />
+        android:title="Cadastro de Área Comum (Síndicos e Administradores)" />
     <item android:id="@+id/help2"
         android:title="Cadastro de Notícias (Síndicos e Administradores)" />
     <item android:id="@+id/help3"
-        android:title="Agendar área comum" />
+        android:title="Agendar Área Comum" />
     <item android:id="@+id/help4"
         android:title="Configurações" />
     <item android:id="@+id/help5"
