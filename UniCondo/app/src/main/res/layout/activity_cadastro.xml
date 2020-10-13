@@ -58,7 +58,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textEmailAddress" />
 
             <TextView
                 android:id="@+id/textView6"

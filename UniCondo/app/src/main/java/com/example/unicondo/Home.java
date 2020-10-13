@@ -18,6 +18,7 @@ public class Home extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
+    private int sessao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,9 @@ public class Home extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        sessao = getIntent().getIntExtra("SESSION_ID", 0);
+        //sessao = getIntent().getStringExtra("SESSION_ID");
 /*
         //ignore os comentarios abaixo sobre banco e tals pq foi um ctrl c ctrl v de uma outra aplicação minha
         ListView noticias = (ListView) findViewById(R.id.ListView);
@@ -45,8 +49,8 @@ public class Home extends AppCompatActivity {
 */
 
         ArrayList<Noticias_Classe> noticias = new ArrayList();
-        noticias.add(new Noticias_Classe("1", "Notícia 1", "12/12/2020", "Apenas uma noticia ordinária para testar a veracidade funcional de tal aplicação"));
-        noticias.add(new Noticias_Classe("2", "Notícia 2", "12/12/2020", "Apenas uma noticia ordinária para testar a veracidade funcional de tal aplicação"));
+        noticias.add(new Noticias_Classe("1", "Notícia 1", "12/12/2020", "Apenas um texto de uma noticia para testar a funcionalidade"));
+        noticias.add(new Noticias_Classe("2", "Notícia 2", "12/12/2020", "Apenas um texto de uma noticia para testar a funcionalidade"));
 
 
 
@@ -69,7 +73,11 @@ public class Home extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_home, menu);
+        if (sessao == 1) {
+            inflater.inflate(R.menu.menu_home2, menu);
+        } else {
+            inflater.inflate(R.menu.menu_home, menu);
+        }
         return true;
     }
 
@@ -85,10 +93,11 @@ public class Home extends AppCompatActivity {
             case R.id.help3:
                 abrirAreasComuns();
                 return true;
-            case R.id.help4:
+            /*case R.id.help4:
                 abrirConfiguracoes();
-                return true;
+                return true;*/
             case R.id.help5:
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -109,8 +118,8 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void abrirConfiguracoes(){
+    /*public void abrirConfiguracoes(){
         Intent intent = new Intent(this, Configuracoes.class);
         startActivity(intent);
-    }
+    }*/
 }
