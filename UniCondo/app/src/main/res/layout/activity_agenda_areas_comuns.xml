@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="365dp"
+        android:layout_height="450dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -19,6 +19,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Selecione o Condomínio" />
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:spinnerMode="dropdown" />
 
         <TextView
             android:id="@+id/textView2"
@@ -36,6 +53,12 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp" />
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal" />
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
@@ -43,9 +66,11 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:text="Informe a data" />
+            android:gravity="center_horizontal"
+            android:text="(Selecione uma data)"
+            android:textSize="18sp" />
 
-        <EditText
+        <!--EditText
             android:id="@+id/editText10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +79,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="date" /-->
 
         <TextView
             android:id="@+id/textView12"
@@ -63,9 +88,22 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:text="Informe a hora" />
+            android:gravity="center_horizontal"
+            android:text="(Selecione a hora de inicio)"
+            android:textSize="18sp" />
 
-        <EditText
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal"
+            android:text="(Selecione a hora de término)"
+            android:textSize="18sp" />
+
+        <!--EditText
             android:id="@+id/editText9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +112,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:inputType="time" />
+            android:inputType="time" /-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,16 +123,16 @@
 
             <Button
                 android:id="@+id/button3"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:text="Agendar" />
 
-            <Button
+            <!--Button
                 android:id="@+id/button4"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Voltar" />
+                android:text="Voltar" /-->
         </LinearLayout>
 
     </LinearLayout>

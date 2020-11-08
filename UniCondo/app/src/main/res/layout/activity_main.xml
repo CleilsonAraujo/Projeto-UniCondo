@@ -38,7 +38,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="E-mail" />
+                android:text="Nome de Usuário ou E-mail" />
 
             <EditText
                 android:id="@+id/editText5"
@@ -71,13 +71,13 @@
                 android:ems="10"
                 android:inputType="textPassword" />
 
-            <Spinner
+            <!--Spinner
                 android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown" /-->
 
             <Button
                 android:id="@+id/button2"

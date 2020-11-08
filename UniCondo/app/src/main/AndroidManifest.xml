@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.unicondo">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AgendaAreasComuns"></activity>
+        <activity android:name=".CadastroMoradores"></activity>
+        <activity android:name=".CadastroCondominio" />
+        <activity android:name=".AgendaAreasComuns" />
         <activity android:name=".Configuracoes" />
         <activity android:name=".CadastroNoticias" />
         <activity android:name=".CadastroAreaComum" />

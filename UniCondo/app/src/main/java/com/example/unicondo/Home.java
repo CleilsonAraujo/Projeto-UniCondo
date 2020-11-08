@@ -7,18 +7,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Home extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
-    private int sessao;
+    private String sessaoToken, urlWebService;
+
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,56 +50,32 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sessao = getIntent().getIntExtra("SESSION_ID", 0);
-        //sessao = getIntent().getStringExtra("SESSION_ID");
+        requestQueue = Volley.newRequestQueue(this);
+
+        //sessao = getIntent().getIntExtra("SESSION_ID", 0);
+        sessaoToken = getIntent().getStringExtra("TOKEN");
+        //Toast.makeText(getApplicationContext(), sessaoToken, Toast.LENGTH_LONG).show();
 /*
-        //ignore os comentarios abaixo sobre banco e tals pq foi um ctrl c ctrl v de uma outra aplicação minha
-        ListView noticias = (ListView) findViewById(R.id.ListView);
-        //adiciona os campos da tabela do banco
-        String[] camposTabela = {"_id", "titulo", "data", "texto"};
-        //adiciona os campos do modelo do listview
-        int[] camposModelo = {R.id.campoid, R.id.campoTitulo, R.id.campoData, R.id.campoTexto};
-
-        MatrixCursor matrixCursor= new MatrixCursor(camposTabela);
-        startManagingCursor(matrixCursor);
-
-        matrixCursor.addRow(new Object[] {1, "Notícia 1", "12/12/2020", "Apenas uma noticia ordinária para testar a veracidade funcional de tal aplicação" });
-
-        SimpleCursorAdapter ad = new SimpleCursorAdapter(getApplicationContext(), R.layout.modelo_tela_noticias, matrixCursor, camposTabela, camposModelo);
-        //habilita a opção de clicar nos contatos da agenda
-        noticias.setAdapter(ad);
-*/
-
-        ArrayList<Noticias_Classe> noticias = new ArrayList();
-        noticias.add(new Noticias_Classe("1", "Notícia 1", "12/12/2020", "Apenas um texto de uma noticia para testar a funcionalidade"));
-        noticias.add(new Noticias_Classe("2", "Notícia 2", "12/12/2020", "Apenas um texto de uma noticia para testar a funcionalidade"));
-
-
-
-
-
-
+        ArrayList<Classe_Noticias> noticias = new ArrayList();
+        noticias.add(new Classe_Noticias("1", "Notícia 1", "12/12/2020", "Apenas um texto de uma noticia para testar a funcionalidade"));
+        noticias.add(new Classe_Noticias("2", "Notícia 2", "12/12/2020", "Apenas um texto de uma noticia para testar a funcionalidade"));
+        */
         //Aqui é instanciado o Recyclerview
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        pegarNoticias();
 
-        mAdapter = new RecyclerViewAdapter(noticias);
-        mRecyclerView.setAdapter(mAdapter);
-
-
+        //DA REFRESH NA ACTIVITY, CRIAR E COLOCAR EM UM onResume()
+        //recreate();
 
     }
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if (sessao == 1) {
+        /*if (sessao == 1) {
             inflater.inflate(R.menu.menu_home2, menu);
-        } else {
+        } else {*/
             inflater.inflate(R.menu.menu_home, menu);
-        }
+        //}
         return true;
     }
 
@@ -85,7 +83,7 @@ public class Home extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.help:
-                abrirCadastroAcomodacao();
+                abrirCadastroAreaComum();
                 return true;
             case R.id.help2:
                 abrirCadastroNoticias();
@@ -99,22 +97,43 @@ public class Home extends AppCompatActivity {
             case R.id.help5:
                 finish();
                 return true;
+            case R.id.help6:
+                abrirCadastroCondominio();
+                return true;
+            case R.id.help7:
+                abrirCadastroMoradores();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void abrirCadastroAcomodacao(){
+    public void abrirCadastroAreaComum(){
         Intent intent = new Intent(this, CadastroAreaComum.class);
+        intent.putExtra("TOKEN", sessaoToken);
         startActivity(intent);
     }
 
     public void abrirCadastroNoticias(){
         Intent intent = new Intent(this, CadastroNoticias.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirCadastroCondominio(){
+        Intent intent = new Intent(this, CadastroCondominio.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirCadastroMoradores(){
+        Intent intent = new Intent(this, CadastroMoradores.class);
+        intent.putExtra("TOKEN", sessaoToken);
         startActivity(intent);
     }
 
     public void abrirAreasComuns(){
         Intent intent = new Intent(this, AgendaAreasComuns.class);
+        intent.putExtra("TOKEN", sessaoToken);
         startActivity(intent);
     }
 
@@ -122,4 +141,78 @@ public class Home extends AppCompatActivity {
         Intent intent = new Intent(this, Configuracoes.class);
         startActivity(intent);
     }*/
+
+    public void pegarNoticias() {
+        urlWebService = "https://api-unicondo.leonardo-bezerra.dev/news";
+
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET,
+                urlWebService, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.v("LogCadastro", response.toString());
+                        ArrayList<Classe_Noticias> noticias = new ArrayList();
+                        try {
+                            mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                            mRecyclerView.setHasFixedSize(true);
+                            mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            mRecyclerView.setLayoutManager(mLayoutManager);
+
+                            for (int i = 0; i < response.length(); i++){
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                noticias.add(new Classe_Noticias(String.valueOf(jsonObject.getInt("id")), jsonObject.getString("title"), jsonObject.getString("created_at"), jsonObject.getString("description")));
+                            }
+
+                            mAdapter = new Classe_RecyclerViewAdapter(noticias);
+                            mRecyclerView.setAdapter(mAdapter);
+                            //Toast.makeText(getApplicationContext(), Integer.toString(idCondominio), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+
+                            Log.v("LogCadastro", e.getMessage());
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if( error instanceof NetworkError) {
+                            //handle your network error here.
+                            Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof ServerError) {
+                            //handle if server error occurs with 5** status code
+                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof AuthFailureError) {
+                            //handle if authFailure occurs.This is generally because of invalid credentials
+                            Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof ParseError) {
+                            //handle if the volley is unable to parse the response data.
+                            Toast.makeText(getApplicationContext(), "Erro de Parse", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof NoConnectionError) {
+                            //handle if no connection is occurred
+                            Toast.makeText(getApplicationContext(), "Erro de conexão API", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof TimeoutError) {
+                            //handle if socket time out is occurred.
+                            Toast.makeText(getApplicationContext(), "Erro de timeout", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("Authorization", "Bearer " + sessaoToken);
+                return headers;
+            }
+        };
+        requestQueue.add(jsonRequest);
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        recreate();
+    }
 }
