@@ -39,6 +39,7 @@ public class Home extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private String sessaoToken, urlWebService;
+    private int tipoUsuario;
 
     RequestQueue requestQueue;
 
@@ -52,7 +53,7 @@ public class Home extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        //sessao = getIntent().getIntExtra("SESSION_ID", 0);
+        tipoUsuario = getIntent().getIntExtra("TIPO_USUARIO", 0);
         sessaoToken = getIntent().getStringExtra("TOKEN");
         //Toast.makeText(getApplicationContext(), sessaoToken, Toast.LENGTH_LONG).show();
 /*
@@ -63,19 +64,18 @@ public class Home extends AppCompatActivity {
         //Aqui é instanciado o Recyclerview
         pegarNoticias();
 
-        //DA REFRESH NA ACTIVITY, CRIAR E COLOCAR EM UM onResume()
-        //recreate();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        /*if (sessao == 1) {
-            inflater.inflate(R.menu.menu_home2, menu);
-        } else {*/
+        if (tipoUsuario == 1) {
             inflater.inflate(R.menu.menu_home, menu);
-        //}
+        } else if (tipoUsuario == 2) {
+            inflater.inflate(R.menu.menu_home2, menu);
+        } else if (tipoUsuario == 3) {
+            inflater.inflate(R.menu.menu_home3, menu);
+        }
         return true;
     }
 
@@ -102,6 +102,18 @@ public class Home extends AppCompatActivity {
                 return true;
             case R.id.help7:
                 abrirCadastroMoradores();
+                return true;
+            case R.id.help8:
+                abrirGerenciaMoradores();
+                return true;
+            case R.id.help9:
+                abrirGerenciaAgendamentos();
+                return true;
+            case R.id.help10:
+                abrirCadastroContaBancaria();
+                return true;
+            case R.id.help11:
+                abrirConfiguraBoleto();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -131,8 +143,37 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void abrirCadastroContaBancaria(){
+        Intent intent = new Intent(this, CadastroContaBancaria.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirConfiguraBoleto(){
+        Intent intent = new Intent(this, ConfiguraBoleto.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirGerenciaMoradores(){
+        Intent intent;
+        if (tipoUsuario == 3){
+            intent = new Intent(this, VisualizaMoradores.class);
+        } else {
+            intent = new Intent(this, GerenciaMoradores.class);
+        }
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
     public void abrirAreasComuns(){
         Intent intent = new Intent(this, AgendaAreasComuns.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirGerenciaAgendamentos(){
+        Intent intent = new Intent(this, GerenciaAgendamentos.class);
         intent.putExtra("TOKEN", sessaoToken);
         startActivity(intent);
     }

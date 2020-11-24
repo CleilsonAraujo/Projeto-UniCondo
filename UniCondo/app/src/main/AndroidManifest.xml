@@ -3,8 +3,8 @@
     package="com.example.unicondo">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CadastroMoradores"></activity>
+        <activity android:name=".ConfiguraBoleto"></activity>
+        <activity android:name=".CadastroContaBancaria" />
+        <activity android:name=".VisualizaMoradores" />
+        <activity android:name=".GerenciaAgendamentos" />
+        <activity android:name=".GerenciaMoradores" />
+        <activity android:name=".CadastroMoradores" />
         <activity android:name=".CadastroCondominio" />
         <activity android:name=".AgendaAreasComuns" />
         <activity android:name=".Configuracoes" />

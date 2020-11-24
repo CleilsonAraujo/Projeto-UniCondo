@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -28,7 +26,6 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -37,19 +34,13 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +52,7 @@ public class CadastroAreaComum extends AppCompatActivity {
     private ImageView imgArea;
     private Button btnCadastrar, btnAddImg;
     int idCondominio;
-    private String urlWebService, sessaoToken, filePath;
+    private String urlWebService, sessaoToken, filePath, extensao;
     Bitmap bitmap;
 
     RequestQueue requestQueue;
@@ -141,6 +132,7 @@ public class CadastroAreaComum extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
             try {
                 Uri picUri = data.getData();
+                extensao = getContentResolver().getType(picUri);
                 Cursor cursor = getContentResolver().query(picUri, null, null, null, null);
                 cursor.moveToFirst();
                 String document_id = cursor.getString(0);
@@ -377,8 +369,11 @@ public class CadastroAreaComum extends AppCompatActivity {
 
         File file = new File(filePath);
         String BASE_URL = "https://api-unicondo.leonardo-bezerra.dev/";
-        RetrofitRequest retrofitRequest = new RetrofitRequest(this, "Bearer " + sessaoToken, BASE_URL,
-                txtNome.getText().toString(), txtDescricao.getText().toString(), Integer.toString(idCondominio), file);
+        Log.e("response", file.toString());
+        Log.e("response", filePath);
+        Log.e("response", extensao);
+        Classe_RetrofitRequest retrofitRequest = new Classe_RetrofitRequest(this, "Bearer " + sessaoToken, BASE_URL,
+                txtNome.getText().toString(), txtDescricao.getText().toString(), Integer.toString(idCondominio), file, extensao);
         retrofitRequest.cadastraAreaComum();
 
     }

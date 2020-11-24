@@ -148,7 +148,7 @@ public class CadastroMoradores extends AppCompatActivity {
         params.put("email", txtEmail.getText().toString());
         params.put("condominium_id", String.valueOf(idCondominio));
 
-        if (tipoUsuario == 1){
+        if (tipoUsuario == 1) {
             urlWebService = "https://api-unicondo.leonardo-bezerra.dev/condominiumium-tenants";
         } else if (tipoUsuario == 2) {
             urlWebService = "https://api-unicondo.leonardo-bezerra.dev/condominium-managers";

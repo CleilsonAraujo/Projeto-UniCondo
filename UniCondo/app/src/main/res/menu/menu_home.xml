@@ -2,15 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/help6"
-        android:title="Cadastro de Condomínio (Sín. e Adm.)" />
+        android:title="Cadastro de Condomínio (Adm.)" />
     <item android:id="@+id/help7"
         android:title="Cadastro de Moradores (Sín. e Adm.)" />
+    <item android:id="@+id/help8"
+        android:title="Gerenciar Moradores" />
     <item android:id="@+id/help"
         android:title="Cadastro de Área Comum (Sín. e Adm.)" />
     <item android:id="@+id/help2"
-        android:title="Cadastro de Comunicados (Sín. e Adm.)" />
-    <item android:id="@+id/help3"
+        android:title="Fazer um Comunicado (Sín. e Adm.)" />
+    <!--item android:id="@+id/help3"
         android:title="Agendar Área Comum" />
+    <item android:id="@+id/help9"
+        android:title="Gerenciar Agendamentos" /-->
+    <item android:id="@+id/help10"
+        android:title="Cadastro de Conta Bancária" />
+    <item android:id="@+id/help11"
+        android:title="Configurar Boleto" />
     <!--item android:id="@+id/help4"
         android:title="Configurações" /-->
     <item android:id="@+id/help5"

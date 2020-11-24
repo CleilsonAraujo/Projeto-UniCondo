@@ -34,10 +34,13 @@ import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,8 +95,8 @@ public class AgendaAreasComuns extends AppCompatActivity {
                                 mes = mes+1;
                                 Log.d("ConfData", "Data informada: " + dia + "/" + mes + "/" + ano);
 
-                                data = dia + "/" + mes + "/" + ano;
-                                lblData.setText("Data selecionada: " + data);
+                                data = ano + "-" + mes + "-" + dia;
+                                lblData.setText("Data selecionada: " + dia + "/" + mes + "/" + ano);
                                 lblData.setError(null);
                             }
                         }, ano, mes, dia);
@@ -204,6 +207,18 @@ public class AgendaAreasComuns extends AppCompatActivity {
                 if (horaFim.length()==0){
                     //Toast.makeText(getApplicationContext(), "Por favor, selecione uma hora de termino", Toast.LENGTH_LONG).show();
                     lblHoraFim.setError("");
+                    validado = false;
+                }
+                Calendar cal3 = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String getCurrentDateTime = sdf.format(cal3.getTime());
+                Log.d("getCurrentDateTime",getCurrentDateTime);
+                Log.d("getCurrentDateTime",data);
+                Log.d("getCurrentDateTime",""+getCurrentDateTime.compareTo(data));
+
+                if (getCurrentDateTime.compareTo(data) > 0) {
+                    Toast.makeText(getApplicationContext(), "Data não pode ser menor que a data atual", Toast.LENGTH_LONG).show();
+                    lblData.setError("");
                     validado = false;
                 }
                 if(validado){
@@ -365,8 +380,8 @@ public class AgendaAreasComuns extends AppCompatActivity {
 
     public void cadastrarAgendamento() {
         Map<String, String> params = new HashMap<>();
-        params.put("date_start", data + " " + horaInicio);
-        params.put("date_end", data + " " + horaFim);
+        params.put("date_start", data + " " + horaInicio + ":00");
+        params.put("date_end", data + " " + horaFim + ":00");
         params.put("common_area_id", String.valueOf(idArea));
 
         urlWebService = "https://api-unicondo.leonardo-bezerra.dev/common-area-schedulings";
@@ -396,7 +411,18 @@ public class AgendaAreasComuns extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();
