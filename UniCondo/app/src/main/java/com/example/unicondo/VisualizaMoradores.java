@@ -60,7 +60,7 @@ public class VisualizaMoradores extends AppCompatActivity {
         sessaoToken = getIntent().getStringExtra("TOKEN");
 
         lstCondominos = (ListView) findViewById(R.id.listaMoradores);
-        lstCondominos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*lstCondominos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Log.i(TAG, "onItemClick: " +position);
@@ -69,7 +69,7 @@ public class VisualizaMoradores extends AppCompatActivity {
                 Classe_Moradores user = (Classe_Moradores) lstCondominos.getItemAtPosition(position);
                 user.setMarcado(!currentCheck);
             }
-        });
+        });*/
 
         spinnerTipoMorador = (Spinner) findViewById(R.id.spinner2);
         spinnerTipoMorador.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -234,11 +234,9 @@ public class VisualizaMoradores extends AppCompatActivity {
                                     esseContexto, android.R.layout.simple_list_item_1, listaDeMoradores);
                             //adapter.notifyDataSetChanged();
                             lstCondominos.setAdapter(adapter);
-                            //lstCondominos.requestLayout();
-                            //((ArrayAdapter) lstCondominos.getAdapter()).notifyDataSetChanged();
-                            for(int in=0;in< listaDeMoradores.size(); in++ )  {
+                            /*for(int in=0;in< listaDeMoradores.size(); in++ )  {
                                 lstCondominos.setItemChecked(in, listaDeMoradores.get(in).isMarcado());
-                            }
+                            }*/
                             //Toast.makeText(getApplicationContext(), Integer.toString(idCondominio), Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
 

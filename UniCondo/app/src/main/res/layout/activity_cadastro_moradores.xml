@@ -55,6 +55,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Insira o nome da pessoa"
                 android:inputType="textPersonName" />
 
             <TextView
@@ -75,6 +76,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Nome utilizado para logar"
                 android:inputType="textPersonName" />
 
             <TextView
@@ -95,6 +97,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="email@email.com"
                 android:inputType="textEmailAddress" />
 
             <TextView

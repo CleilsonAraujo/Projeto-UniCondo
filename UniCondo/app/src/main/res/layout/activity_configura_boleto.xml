@@ -55,6 +55,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Ex. 555.55"
                 android:inputType="numberDecimal" />
 
             <TextView
@@ -75,6 +76,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Ex. 0.015"
                 android:inputType="numberDecimal" />
 
             <TextView
@@ -95,6 +97,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Ex. 2.5"
                 android:inputType="numberDecimal" />
 
             <TextView
@@ -115,6 +118,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Ex. 5"
                 android:inputType="number" />
 
             <Button

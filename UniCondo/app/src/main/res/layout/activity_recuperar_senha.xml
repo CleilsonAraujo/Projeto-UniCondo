@@ -33,6 +33,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
+            android:hint="email@email.com"
             android:inputType="textEmailAddress" />
 
         <TextView
@@ -55,6 +56,7 @@
             android:layout_marginBottom="5dp"
             android:ems="10"
             android:visibility="gone"
+            android:hint="Insira o código recebido"
             android:inputType="number" />
 
         <TextView
@@ -77,6 +79,7 @@
             android:layout_marginBottom="5dp"
             android:visibility="gone"
             android:ems="10"
+            android:hint="Insira sua nova senha"
             android:inputType="textPassword" />
 
         <TextView
@@ -99,6 +102,7 @@
             android:layout_marginBottom="5dp"
             android:ems="10"
             android:visibility="gone"
+            android:hint="Repita a senha informada acima"
             android:inputType="textPassword" />
 
         <Button

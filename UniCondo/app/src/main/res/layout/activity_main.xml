@@ -49,6 +49,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Insira seu usuário"
                 android:inputType="textEmailAddress" />
 
             <TextView
@@ -69,6 +70,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Insira sua senha"
                 android:inputType="textPassword" />
 
             <!--Spinner

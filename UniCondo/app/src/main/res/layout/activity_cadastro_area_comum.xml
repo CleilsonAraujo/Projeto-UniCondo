@@ -54,6 +54,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
+            android:hint="Insira o nome da área"
             android:inputType="textPersonName" />
 
         <TextView
@@ -74,6 +75,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
+            android:hint="Ex: horário de funcionamento"
             android:inputType="textPersonName" />
 
         <LinearLayout

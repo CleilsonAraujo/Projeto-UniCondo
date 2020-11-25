@@ -38,6 +38,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Insira o nome do seu condomínio"
                 android:inputType="textPersonName" />
 
             <TextView
@@ -59,6 +60,7 @@
                 android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:maxLength="14"
+                android:hint="XX.XXX.XXX/XXXX-XX"
                 android:inputType="number" />
 
             <TextView
@@ -80,6 +82,7 @@
                 android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:maxLength="8"
+                android:hint="XXXXX-XXX"
                 android:inputType="number" />
 
             <TextView
@@ -100,6 +103,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Endereço por extenso"
                 android:inputType="textPersonName" />
 
             <!--TextView

@@ -367,15 +367,18 @@ public class CadastroAreaComum extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);*/
 
-        File file = new File(filePath);
+        File file = null;
+        if (filePath != null){
+            file = new File(filePath);
+        }
         String BASE_URL = "https://api-unicondo.leonardo-bezerra.dev/";
-        Log.e("response", file.toString());
-        Log.e("response", filePath);
-        Log.e("response", extensao);
+        //Log.e("response", file.toString());
+        //Log.e("response", filePath);
+        //Log.e("response", extensao);
         Classe_RetrofitRequest retrofitRequest = new Classe_RetrofitRequest(this, "Bearer " + sessaoToken, BASE_URL,
                 txtNome.getText().toString(), txtDescricao.getText().toString(), Integer.toString(idCondominio), file, extensao);
         retrofitRequest.cadastraAreaComum();
-
+        //finish();
     }
 
     /*public String encodeBitmapImage(Bitmap bitmap){

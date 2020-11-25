@@ -19,7 +19,13 @@
         android:title="Cadastro de Conta Bancária" />
     <item android:id="@+id/help11"
         android:title="Configurar Boleto" />
-    <!--item android:id="@+id/help4"
+    <item android:id="@+id/help12"
+        android:title="Gerar Boletos" />
+    <item android:id="@+id/help13"
+        android:title="Status de Pagamentos" />
+    <!--item android:id="@+id/help14"
+        android:title="Agendar Visitante" />
+    <item android:id="@+id/help4"
         android:title="Configurações" /-->
     <item android:id="@+id/help5"
         android:title="Sair" />

@@ -4,9 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -98,9 +95,11 @@ public class Classe_RetrofitRequest {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).
                 addConverterFactory(GsonConverterFactory.create()).client(okHttpClient).build();
 
-
-        RequestBody requestBody = RequestBody.create(MediaType.parse(extensao), imgArea);
-        MultipartBody.Part parts = MultipartBody.Part.createFormData("image_file", imgArea.getName(), requestBody);
+        MultipartBody.Part parts = null;
+        if (imgArea != null && extensao != null){
+            RequestBody requestBody = RequestBody.create(MediaType.parse(extensao), imgArea);
+            parts = MultipartBody.Part.createFormData("image_file", imgArea.getName(), requestBody);
+        }
 
         RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), nomeArea);
         RequestBody descricao = RequestBody.create(MediaType.parse("text/plain"), descArea);
@@ -126,9 +125,14 @@ public class Classe_RetrofitRequest {
                     //JSONObject obj = new JSONObject(response.toString());
                     Log.e("response", response.toString());
                     Log.e("response", response.body().toString());
-                    Log.e("response", call.toString());
+                    Log.e("response", response.getClass().getName());
                     Log.e("response", response.message());
-                    Toast.makeText(context, "parece que agora foi", Toast.LENGTH_LONG).show();
+                    Log.e("response", response.raw().toString());
+                    if (response.code() == 200){
+                        Toast.makeText(context, "Cadastro realizado com sucesso", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "Algo deu errado, tente novamente mais tarde", Toast.LENGTH_LONG).show();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(context, String.valueOf(e.getMessage()), Toast.LENGTH_LONG).show();
@@ -137,7 +141,7 @@ public class Classe_RetrofitRequest {
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(context, "Algo deu errado, tente novamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Algo deu errado, tente novamente mais tarde", Toast.LENGTH_LONG).show();
                 Log.e("response", t.getMessage());
             }
         });

@@ -39,7 +39,7 @@ public class Home extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private String sessaoToken, urlWebService;
-    private int tipoUsuario;
+    private int tipoUsuario, idUsuario;
 
     RequestQueue requestQueue;
 
@@ -53,6 +53,7 @@ public class Home extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
+        tipoUsuario = getIntent().getIntExtra("TIPO_USUARIO", 0);
         tipoUsuario = getIntent().getIntExtra("TIPO_USUARIO", 0);
         sessaoToken = getIntent().getStringExtra("TOKEN");
         //Toast.makeText(getApplicationContext(), sessaoToken, Toast.LENGTH_LONG).show();
@@ -115,6 +116,21 @@ public class Home extends AppCompatActivity {
             case R.id.help11:
                 abrirConfiguraBoleto();
                 return true;
+            case R.id.help12:
+                abrirGerarBoleto();
+                return true;
+            case R.id.help13:
+                abrirStatusPagamentos();
+                return true;
+            /*case R.id.help14:
+                abrirAgendaVisita();
+                return true;
+            case R.id.help15:
+                abrirGerarBoleto();
+                return true;*/
+            case R.id.help16:
+                abrirVisualizaStatusPagamento();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -151,6 +167,35 @@ public class Home extends AppCompatActivity {
 
     public void abrirConfiguraBoleto(){
         Intent intent = new Intent(this, ConfiguraBoleto.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirGerarBoleto(){
+        Intent intent = new Intent(this, GerarBoleto.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirVisualizaStatusPagamento(){
+        Intent intent = new Intent(this, VisualizaStatusPagamento.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirAgendaVisita(){
+        Intent intent = new Intent(this, AgendaVisita.class);
+        intent.putExtra("TOKEN", sessaoToken);
+        startActivity(intent);
+    }
+
+    public void abrirStatusPagamentos(){
+        Intent intent;
+        if (tipoUsuario == 3){
+            intent = new Intent(this, VisualizaMoradores.class);
+        } else {
+            intent = new Intent(this, StatusPagamentos.class);
+        }
         intent.putExtra("TOKEN", sessaoToken);
         startActivity(intent);
     }

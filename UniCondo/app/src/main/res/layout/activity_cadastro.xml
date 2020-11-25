@@ -38,6 +38,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Insira seu nome"
                 android:inputType="textPersonName" />
 
             <TextView
@@ -58,6 +59,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Nome utilizado para logar"
                 android:inputType="textPersonName" />
 
             <TextView
@@ -78,6 +80,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="email@email.com"
                 android:inputType="textEmailAddress" />
 
             <TextView
@@ -98,6 +101,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Entre 8 e 16 caracteres"
+                android:maxLength="16"
                 android:inputType="textPassword" />
 
             <TextView
@@ -118,6 +123,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
+                android:hint="Repita a senha informada acima"
+                android:maxLength="16"
                 android:inputType="textPassword" />
 
             <!--Spinner

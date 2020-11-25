@@ -15,6 +15,8 @@
         android:title="Agendar Área Comum" />
     <item android:id="@+id/help9"
         android:title="Gerenciar Agendamentos" />
+    <item android:id="@+id/help16"
+        android:title="Visualizar Boletos Pendentes" />
     <!--item android:id="@+id/help4"
         android:title="Configurações" /-->
     <item android:id="@+id/help5"

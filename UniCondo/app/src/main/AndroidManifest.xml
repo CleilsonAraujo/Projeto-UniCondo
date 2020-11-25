@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConfiguraBoleto"></activity>
+        <activity android:name=".VisualizaStatusPagamento"></activity>
+        <activity android:name=".AgendaVisita" />
+        <activity android:name=".StatusPagamentos" />
+        <activity android:name=".GerarBoleto" />
+        <activity android:name=".ConfiguraBoleto" />
         <activity android:name=".CadastroContaBancaria" />
         <activity android:name=".VisualizaMoradores" />
         <activity android:name=".GerenciaAgendamentos" />
