@@ -3,19 +3,41 @@
 
     <!--item android:id="@+id/help6"
         android:title="Cadastro de Condomínio (Adm.)" /-->
-    <item android:id="@+id/help7"
-        android:title="Cadastro de Moradores (Sín. e Adm.)" />
-    <item android:id="@+id/help8"
-        android:title="Gerenciar Moradores" />
-    <item android:id="@+id/help"
-        android:title="Cadastro de Área Comum (Sín. e Adm.)" />
-    <item android:id="@+id/help2"
-        android:title="Cadastro de Comunicados (Sín. e Adm.)" />
-    <item android:id="@+id/help3"
+    <item android:id="@+id/cond"
+        android:title="Condomínio">
+        <menu>
+            <item android:id="@+id/help7"
+                android:title="Cadastro de Moradores" />
+            <item android:id="@+id/help8"
+                android:title="Gerenciar Moradores" />
+            <item android:id="@+id/help"
+                android:title="Cadastro de Área Comum" />
+            <item android:id="@+id/help2"
+                android:title="Fazer um Comunicado" />
+        </menu>
+    </item>
+    <!--item android:id="@+id/help3"
         android:title="Agendar Área Comum" />
     <item android:id="@+id/help9"
         android:title="Gerenciar Agendamentos" />
-    <!--item android:id="@+id/help4"
+    <item android:id="@+id/help10"
+        android:title="Cadastro de Conta Bancária" />
+    <item android:id="@+id/help11"
+        android:title="Configurar Boleto" /-->
+    <item android:id="@+id/pag"
+        android:title="Pagamentos">
+        <menu>
+            <item android:id="@+id/help12"
+                android:title="Gerar Boletos" />
+            <item android:id="@+id/help13"
+                android:title="Status de Pagamentos" />
+        </menu>
+    </item>
+    <!--item android:id="@+id/help16"
+        android:title="Verificar Boletos Pendentes" /-->
+    <!--item android:id="@+id/help14"
+        android:title="Agendar Visitante" />
+    <item android:id="@+id/help4"
         android:title="Configurações" /-->
     <item android:id="@+id/help5"
         android:title="Sair" />

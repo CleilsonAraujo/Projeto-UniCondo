@@ -141,7 +141,7 @@ public class VisualizaStatusPagamento extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
                             com.android.volley.NetworkResponse networkResponse = error.networkResponse;
                             //if (networkResponse != null && networkResponse.data != null) {
                             String jsonError = new String(networkResponse.data);

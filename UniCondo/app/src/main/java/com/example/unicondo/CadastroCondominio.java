@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -49,9 +50,13 @@ public class CadastroCondominio extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         txtNome = (EditText) findViewById(R.id.editText11);
-        txtCNPJ = (EditText) findViewById(R.id.editText12);
-        txtCEP = (EditText) findViewById(R.id.editText5);
         txtEndereco = (EditText) findViewById(R.id.editText4);
+
+        txtCNPJ = (EditText) findViewById(R.id.editText12);
+        txtCNPJ.addTextChangedListener(MaskEditUtil.mask(txtCNPJ, MaskEditUtil.FORMAT_CNPJ));
+
+        txtCEP = (EditText) findViewById(R.id.editText5);
+        txtCEP.addTextChangedListener(MaskEditUtil.mask(txtCEP, MaskEditUtil.FORMAT_CEP));
 
         txtCEP.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -78,7 +83,7 @@ public class CadastroCondominio extends AppCompatActivity {
                     txtCNPJ.setError("Campo CNPJ é Obrigatório");
                     txtCNPJ.requestFocus();
                     validado = false;
-                } else if (!validaCNPJ(txtCNPJ.getText().toString())){
+                } else if (!validaCNPJ(MaskEditUtil.unmask(txtCNPJ.getText().toString()))){
                     txtCNPJ.setError("CNPJ informado não é válido");
                     txtCNPJ.requestFocus();
                     validado = false;
@@ -163,8 +168,8 @@ public class CadastroCondominio extends AppCompatActivity {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("name", txtNome.getText().toString());
-        params.put("cnpj", txtCNPJ.getText().toString());
-        params.put("cep", txtCEP.getText().toString());
+        params.put("cnpj", MaskEditUtil.unmask(txtCNPJ.getText().toString()));
+        params.put("cep", MaskEditUtil.unmask(txtCEP.getText().toString()));
         params.put("address", txtEndereco.getText().toString());
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,
@@ -192,7 +197,17 @@ public class CadastroCondominio extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();
@@ -221,7 +236,7 @@ public class CadastroCondominio extends AppCompatActivity {
     }
 
     public void verificarCEP() {
-        urlWebService = "https://viacep.com.br/ws/" + txtCEP.getText().toString() + "/json/";
+        urlWebService = "https://viacep.com.br/ws/" + MaskEditUtil.unmask(txtCEP.getText().toString()) + "/json/";
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET,
                 urlWebService, null,
@@ -236,7 +251,8 @@ public class CadastroCondominio extends AppCompatActivity {
                         } catch (Exception e) {
 
                             Log.v("LogCadastro", e.getMessage());
-                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "CEP informado não encontrado", Toast.LENGTH_LONG).show();
+                            txtCEP.setError("CEP informado não encontrado");
                         }
                     }
                 },
@@ -249,7 +265,8 @@ public class CadastroCondominio extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "CEP informado não é válido", Toast.LENGTH_LONG).show();
+                            txtCEP.setError("CEP informado não é válido");
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();

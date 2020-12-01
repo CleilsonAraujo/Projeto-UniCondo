@@ -27,9 +27,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +42,7 @@ public class Home extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private String sessaoToken, urlWebService;
-    private int tipoUsuario, idUsuario;
+    private int sessaoTipoUsuario, idUsuario;
 
     RequestQueue requestQueue;
 
@@ -53,8 +56,8 @@ public class Home extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        tipoUsuario = getIntent().getIntExtra("TIPO_USUARIO", 0);
-        tipoUsuario = getIntent().getIntExtra("TIPO_USUARIO", 0);
+        //tipoUsuario = getIntent().getIntExtra("TIPO_USUARIO", 0);
+        sessaoTipoUsuario = getIntent().getIntExtra("TIPO_USUARIO", 0);
         sessaoToken = getIntent().getStringExtra("TOKEN");
         //Toast.makeText(getApplicationContext(), sessaoToken, Toast.LENGTH_LONG).show();
 /*
@@ -70,11 +73,11 @@ public class Home extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if (tipoUsuario == 1) {
+        if (sessaoTipoUsuario == 1) {
             inflater.inflate(R.menu.menu_home, menu);
-        } else if (tipoUsuario == 2) {
+        } else if (sessaoTipoUsuario == 2) {
             inflater.inflate(R.menu.menu_home2, menu);
-        } else if (tipoUsuario == 3) {
+        } else if (sessaoTipoUsuario == 3) {
             inflater.inflate(R.menu.menu_home3, menu);
         }
         return true;
@@ -191,7 +194,7 @@ public class Home extends AppCompatActivity {
 
     public void abrirStatusPagamentos(){
         Intent intent;
-        if (tipoUsuario == 3){
+        if (sessaoTipoUsuario == 3){
             intent = new Intent(this, VisualizaMoradores.class);
         } else {
             intent = new Intent(this, StatusPagamentos.class);
@@ -202,12 +205,13 @@ public class Home extends AppCompatActivity {
 
     public void abrirGerenciaMoradores(){
         Intent intent;
-        if (tipoUsuario == 3){
+        if (sessaoTipoUsuario == 3){
             intent = new Intent(this, VisualizaMoradores.class);
         } else {
             intent = new Intent(this, GerenciaMoradores.class);
         }
         intent.putExtra("TOKEN", sessaoToken);
+        intent.putExtra("TIPO_USUARIO", sessaoTipoUsuario);
         startActivity(intent);
     }
 
@@ -238,6 +242,8 @@ public class Home extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         Log.v("LogCadastro", response.toString());
                         ArrayList<Classe_Noticias> noticias = new ArrayList();
+                        SimpleDateFormat sdfString = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
                         try {
                             mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
                             mRecyclerView.setHasFixedSize(true);
@@ -246,7 +252,13 @@ public class Home extends AppCompatActivity {
 
                             for (int i = 0; i < response.length(); i++){
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                noticias.add(new Classe_Noticias(String.valueOf(jsonObject.getInt("id")), jsonObject.getString("title"), jsonObject.getString("created_at"), jsonObject.getString("description")));
+
+                                String[] data = jsonObject.getString("created_at").split(" ");
+                                Date frmtData = null;
+                                frmtData = sdfDate.parse(data[0]);
+
+                                noticias.add(new Classe_Noticias(String.valueOf(jsonObject.getInt("id")), jsonObject.getString("title"),
+                                        sdfString.format(frmtData) + " " + data[1], jsonObject.getString("description")));
                             }
 
                             mAdapter = new Classe_RecyclerViewAdapter(noticias);
@@ -268,7 +280,17 @@ public class Home extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();

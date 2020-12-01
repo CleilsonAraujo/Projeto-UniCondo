@@ -46,7 +46,7 @@ public class GerenciaMoradores extends AppCompatActivity {
     private Spinner spinnerCondominio, spinnerTipoMorador;
     private ListView lstCondominos;
     private Button btnRemover;
-    int idCondominio, tipoUsuario;
+    int idCondominio, tipoUsuario, sessaoTipoUsuario;
     String urlWebService, sessaoToken;
 
     RequestQueue requestQueue;
@@ -62,6 +62,7 @@ public class GerenciaMoradores extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         sessaoToken = getIntent().getStringExtra("TOKEN");
+        sessaoTipoUsuario = getIntent().getIntExtra("TIPO_USUARIO", 0);
 
         lstCondominos = (ListView) findViewById(R.id.listaMoradores);
         lstCondominos.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -110,8 +111,14 @@ public class GerenciaMoradores extends AppCompatActivity {
                 Classe_Condominios cond = (Classe_Condominios) adapterView.getSelectedItem();
                 //Toast.makeText(getApplicationContext(), "nome do cond: "+cond.getNome()+"\nid do cond: "+cond.getId(), Toast.LENGTH_LONG).show();
                 idCondominio = cond.getId();
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(esseContexto,
-                        R.array.lista_tipo_usuario, android.R.layout.simple_spinner_item);
+                ArrayAdapter<CharSequence> adapter;
+                if (sessaoTipoUsuario == 2){
+                    adapter = ArrayAdapter.createFromResource(esseContexto,
+                            R.array.lista_tipo_usuario2, android.R.layout.simple_spinner_item);
+                } else {
+                    adapter = ArrayAdapter.createFromResource(esseContexto,
+                            R.array.lista_tipo_usuario, android.R.layout.simple_spinner_item);
+                }
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerTipoMorador.setAdapter(adapter);
                 //Toast.makeText(getApplicationContext(), "id do cond: "+idCondominio, Toast.LENGTH_LONG).show();
@@ -215,7 +222,17 @@ public class GerenciaMoradores extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();
@@ -298,7 +315,7 @@ public class GerenciaMoradores extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
                             com.android.volley.NetworkResponse networkResponse = error.networkResponse;
                             //if (networkResponse != null && networkResponse.data != null) {
                             String jsonError = new String(networkResponse.data);

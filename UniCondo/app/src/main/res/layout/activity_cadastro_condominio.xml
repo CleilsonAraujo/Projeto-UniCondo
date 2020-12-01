@@ -59,7 +59,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
-                android:maxLength="14"
+                android:maxLength="18"
                 android:hint="XX.XXX.XXX/XXXX-XX"
                 android:inputType="number" />
 
@@ -81,7 +81,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:ems="10"
-                android:maxLength="8"
+                android:maxLength="9"
                 android:hint="XXXXX-XXX"
                 android:inputType="number" />
 

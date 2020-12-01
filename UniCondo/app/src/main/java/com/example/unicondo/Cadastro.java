@@ -34,7 +34,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Cadastro extends AppCompatActivity {
     //private Spinner spinnerTipoLogin;
     private EditText txtNome;
     private EditText txtNomeUsuario;
@@ -113,29 +113,6 @@ public class Cadastro extends AppCompatActivity implements AdapterView.OnItemSel
                 }
             }
         });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        /*String text = adapterView.getItemAtPosition(i).toString();
-        //Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
-
-        switch(text){
-            case "Condômino":
-                tipoUsuario = 1;
-                break;
-            case "Síndico":
-                tipoUsuario = 2;
-                break;
-            case "Administrador":
-                tipoUsuario = 3;
-                break;
-        }*/
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     public void cadastrarUsuario() {

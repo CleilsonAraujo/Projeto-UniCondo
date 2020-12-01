@@ -30,6 +30,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -179,7 +180,17 @@ public class CadastroMoradores extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();
@@ -243,7 +254,17 @@ public class CadastroMoradores extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();

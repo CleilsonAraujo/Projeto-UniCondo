@@ -5,18 +5,33 @@
         android:title="Cadastro de Condomínio (Adm.)" />
     <item android:id="@+id/help7"
         android:title="Cadastro de Moradores (Sín. e Adm.)" /-->
-    <item android:id="@+id/help8"
-        android:title="Visualizar Moradores" />
+    <item android:id="@+id/cond"
+        android:title="Condomínio">
+        <menu>
+            <item android:id="@+id/help8"
+                android:title="Visualizar Moradores" />
+        </menu>
+    </item>
     <!--item android:id="@+id/help"
         android:title="Cadastro de Área Comum (Sín. e Adm.)" />
     <item android:id="@+id/help2"
         android:title="Cadastro de Comunicados (Sín. e Adm.)" /-->
-    <item android:id="@+id/help3"
-        android:title="Agendar Área Comum" />
-    <item android:id="@+id/help9"
-        android:title="Gerenciar Agendamentos" />
-    <item android:id="@+id/help16"
-        android:title="Visualizar Boletos Pendentes" />
+    <item android:id="@+id/agen"
+        android:title="Agendamentos">
+        <menu>
+            <item android:id="@+id/help3"
+                android:title="Agendar Área Comum" />
+            <item android:id="@+id/help9"
+                android:title="Gerenciar Agendamentos" />
+        </menu>
+    </item>
+    <item android:id="@+id/pag"
+        android:title="Pagamentos">
+        <menu>
+            <item android:id="@+id/help16"
+                android:title="Verificar Boletos Pendentes" />
+        </menu>
+    </item>
     <!--item android:id="@+id/help4"
         android:title="Configurações" /-->
     <item android:id="@+id/help5"

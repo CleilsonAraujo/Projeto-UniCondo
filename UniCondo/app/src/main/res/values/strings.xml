@@ -5,6 +5,11 @@
         <item>Síndico</item>
         <!--item>Administrador</item-->
     </string-array>
+    <string-array name="lista_tipo_usuario2">
+        <item>Condômino</item>
+        <!--item>Síndico</item>
+        <item>Administrador</item-->
+    </string-array>
     <string-array name="lista_areas_comuns">
         <item>Churrasqueira</item>
         <item>Academia</item>

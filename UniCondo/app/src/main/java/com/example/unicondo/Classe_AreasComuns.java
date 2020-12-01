@@ -2,12 +2,21 @@ package com.example.unicondo;
 
 public class Classe_AreasComuns {
     int id;
-    String nome, imgURL;
+    String nome, imgURL, descricao;
 
-    public Classe_AreasComuns(int id, String nome, String imgURL) {
+    public Classe_AreasComuns(int id, String nome, String imgURL, String descricao) {
         this.id = id;
         this.nome = nome;
         this.imgURL = imgURL;
+        this.descricao = descricao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public int getId() {

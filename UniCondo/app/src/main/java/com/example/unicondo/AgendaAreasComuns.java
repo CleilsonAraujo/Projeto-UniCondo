@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class AgendaAreasComuns extends AppCompatActivity {
     private Spinner spinnerCondominio, spinnerAreasComuns;
-    private TextView lblData, lblHoraInicio, lblHoraFim;
+    private TextView lblData, lblHoraInicio, lblHoraFim, lblDescricao;
     private Button btnAgendar;
     private ImageView imgArea;
     int idCondominio, idArea;
@@ -78,6 +78,8 @@ public class AgendaAreasComuns extends AppCompatActivity {
         } catch (Exception e){
             Log.e("LogImagem", e.getMessage());
         }*/
+
+        lblDescricao = (TextView) findViewById(R.id.textView16);
 
         lblData = (TextView) findViewById(R.id.textView4);
         lblData.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +178,7 @@ public class AgendaAreasComuns extends AppCompatActivity {
                 ((TextView) adapterView.getChildAt(0)).setTextColor(Color.BLACK);
                 Classe_AreasComuns areas = (Classe_AreasComuns) adapterView.getSelectedItem();
                 //Toast.makeText(getApplicationContext(), "nome do cond: "+cond.getNome()+"\nid do cond: "+cond.getId(), Toast.LENGTH_LONG).show();
+                lblDescricao.setText(areas.getDescricao());
                 idArea = areas.getId();
                 imageUrl = areas.getImgURL();
                 Picasso.with(getApplicationContext()).load(imageUrl).into(imgArea);
@@ -283,7 +286,17 @@ public class AgendaAreasComuns extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();
@@ -326,7 +339,8 @@ public class AgendaAreasComuns extends AppCompatActivity {
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 if (jsonObject.getInt("condominium_id") == idCondominio){
                                     listaDeAreasComuns.add(new Classe_AreasComuns(jsonObject.getInt("id"),
-                                            jsonObject.getString("name"), jsonObject.getString("image_url")));
+                                            jsonObject.getString("name"), jsonObject.getString("image_url"),
+                                            jsonObject.getString("description")));
                                 }
                             }
                             ArrayAdapter<Classe_AreasComuns> adapter2 = new ArrayAdapter<Classe_AreasComuns>(getApplicationContext(),
@@ -350,7 +364,17 @@ public class AgendaAreasComuns extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();

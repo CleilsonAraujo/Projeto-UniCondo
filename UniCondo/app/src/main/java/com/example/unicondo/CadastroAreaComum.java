@@ -38,6 +38,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -55,6 +56,7 @@ public class CadastroAreaComum extends AppCompatActivity {
     private String urlWebService, sessaoToken, filePath, extensao;
     Bitmap bitmap;
 
+    List<Classe_AreasComuns> listaDeAreasComuns = new ArrayList<>();
     RequestQueue requestQueue;
 
     @Override
@@ -81,6 +83,7 @@ public class CadastroAreaComum extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "nome do cond: "+cond.getNome()+"\nid do cond: "+cond.getId(), Toast.LENGTH_LONG).show();
                 idCondominio = cond.getId();
                 //Toast.makeText(getApplicationContext(), "id do cond: "+idCondominio, Toast.LENGTH_LONG).show();
+                pegarAreasComuns();
             }
 
             @Override
@@ -109,10 +112,22 @@ public class CadastroAreaComum extends AppCompatActivity {
 
                 boolean validado = true;
 
+                Log.e("variaveis", String.valueOf(txtNome.getText()));
+
                 if (txtNome.getText().length()==0){
                     txtNome.setError("Campo Nome da área é Obrigatório");
                     txtNome.requestFocus();
                     validado = false;
+                } else {
+                    for (int i=0; i<listaDeAreasComuns.size(); i++){
+                        Log.e("variaveis", listaDeAreasComuns.get(i).getNome());
+                        Log.e("variaveis", String.valueOf(String.valueOf(txtNome.getText()).equals(listaDeAreasComuns.get(i).getNome())));
+                        if (String.valueOf(txtNome.getText()).equals(listaDeAreasComuns.get(i).getNome())) {
+                            txtNome.setError("Esta área já se encontra cadastrada, informar um nome diferente");
+                            txtNome.requestFocus();
+                            validado = false;
+                        }
+                    }
                 }
                 if (txtDescricao.getText().length()==0){
                     txtDescricao.setError("Campo Descrição é Obrigatório");
@@ -219,7 +234,17 @@ public class CadastroAreaComum extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
                         } else if( error instanceof ServerError) {
                             //handle if server error occurs with 5** status code
-                            Toast.makeText(getApplicationContext(), "Erro de servidor", Toast.LENGTH_LONG).show();
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } else if( error instanceof AuthFailureError) {
                             //handle if authFailure occurs.This is generally because of invalid credentials
                             Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();
@@ -379,6 +404,79 @@ public class CadastroAreaComum extends AppCompatActivity {
                 txtNome.getText().toString(), txtDescricao.getText().toString(), Integer.toString(idCondominio), file, extensao);
         retrofitRequest.cadastraAreaComum();
         //finish();
+    }
+
+    public void pegarAreasComuns() {
+        urlWebService = "https://api-unicondo.leonardo-bezerra.dev/common-areas";
+
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET,
+                urlWebService, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.v("LogCadastro", response.toString());
+                        try {
+                            for (int i = 0; i < response.length(); i++){
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                if (jsonObject.getInt("condominium_id") == idCondominio){
+                                    listaDeAreasComuns.add(new Classe_AreasComuns(jsonObject.getInt("id"),
+                                            jsonObject.getString("name"), jsonObject.getString("image_url"),
+                                            String.valueOf(jsonObject.getInt("condominium_id"))));
+                                }
+                            }
+                            //Toast.makeText(getApplicationContext(), Integer.toString(idCondominio), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+
+                            Log.v("LogCadastro", e.getMessage());
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if( error instanceof NetworkError) {
+                            //handle your network error here.
+                            Toast.makeText(getApplicationContext(), "Erro de conexão de internet", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof ServerError) {
+                            //handle if server error occurs with 5** status code
+                            com.android.volley.NetworkResponse networkResponse = error.networkResponse;
+                            //if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            Log.v("LogCadastro", jsonError);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(jsonError);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("error"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else if( error instanceof AuthFailureError) {
+                            //handle if authFailure occurs.This is generally because of invalid credentials
+                            Toast.makeText(getApplicationContext(), "Erro de autenticação", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof ParseError) {
+                            //handle if the volley is unable to parse the response data.
+                            Toast.makeText(getApplicationContext(), "Erro de Parse", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof NoConnectionError) {
+                            //handle if no connection is occurred
+                            Toast.makeText(getApplicationContext(), "Erro de conexão API", Toast.LENGTH_LONG).show();
+                        } else if( error instanceof TimeoutError) {
+                            //handle if socket time out is occurred.
+                            Toast.makeText(getApplicationContext(), "Erro de timeout", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("Authorization", "Bearer " + sessaoToken);
+                return headers;
+            }
+        };
+        requestQueue.add(jsonRequest);
     }
 
     /*public String encodeBitmapImage(Bitmap bitmap){
